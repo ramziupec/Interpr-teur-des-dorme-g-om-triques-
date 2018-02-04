@@ -1,4 +1,4 @@
-#Le projet 
+## Le projet 
  Il s’agit d’un interpréteur de commandes pour manipuler des formes géométriques, l’utilisateur introduit des commandes suivant une syntaxe prédéfini et les résultats sont affichés dans une fenêtre. 
  
  ## Environnement Notre projet a été développé sous l’environnement suivant : 
@@ -19,5 +19,6 @@
  
  > http://www.sfml-dev.org/tutorials/2.4/start-cb-fr.php 
  
- > Activation du standard C++14 Sous Code::Blocks, Project > Build Options  
+ > Activation du standard C++14 Sous Code::Blocks:
+   Project > Build Options  
  
