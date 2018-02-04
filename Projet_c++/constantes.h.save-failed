@@ -1,0 +1,107 @@
+#pragma once
+
+// includes
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <vector>
+#include <cstring>
+#include <string>
+#include <sstream>
+#include <map>
+#include <dos.h>
+#include <dir.h>
+#include <thread>
+#include <typeinfo>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Config.hpp>
+#include "couleur.h"
+
+// DEBUG
+#define DEBUG 0
+
+// namespace
+
+using namespace std;
+using namespace sf;
+
+// messages
+
+#define START_MSG "Bienvenue !"
+#define EXIT_CMD "exit"
+
+// commandes
+
+#define CREATE "create" // new
+#define UNSELECT "unselect" // operation
+#define CHANGE_COLOR "color" // << ou []
+#define MOVE "move" // +
+#define ROTATE "rotate" // %
+#define SCALEUP "scaleup" // *
+#define SCALEDOWN "scaledown" // *
+#define REMOVE "remove" // delete
+#define CLEAR "removeall"
+#define CLS "cls"
+#define COPY "duplicate" // new --> +
+#define DIST "dist"
+#define COLOR "color"
+
+#define CONTOUR "contour"
+#define BACKGROUND "background"
+
+#define LIST "list"
+#define HELP "help"
+#define TEST "test"
+#define TEST_RECTANGLE "testrect"
+#define TEST_CERCLE "testcercle"
+#define TEST_POLYGONE "testpolygone"
+
+// formes
+
+#define RECTANGLE "rectangle"
+#define POLYGONE "polygone"
+#define CERCLE "cercle"
+
+// couleurs
+
+#define ROUGE "rouge"
+#define VERT "vert"
+#define BLEU "bleu"
+#define BLANC "blanc"
+#define GRIS "gris"
+#define ORANGE "orange"
+
+// messages d'erreurs
+
+#define COMMANDE_INCONNUE "Commande inconnue !"
+#define COULEUR_INCONNUE "Couleur inconnue !"
+#define FORME_INCONNUE "Forme inconnue !"
+#define PARAMETRE_MANQUANT "Paramètre manquant !"
+#define TAILLE_INVALIDE "Taille invalide !"
+
+// autres
+
+#define AUCUNE_FORME_SELECTIONNE "nil"
+#define MSG_ALREADY_EXISTS "Cette forme existe deja"
+#define MSG_NOT_EXISTS "Forme inexistante : "
+#define MAX_FORM_MSG "ERREUR : Le nombre maximal de formes est atteint, pensez a supprimer !"
+#define MAX_BORD_SIZE_MSG "ERREUR : L'epaisseur de la bordure doit etre inférieure ou egale a " //MAX_FORM_BORD_SIZE
+#define WINDOW_OVERFLOW_ORIGIN "ERREUR : L'origine de la forme est a l'exterieur de l'ecran"
+#define LONGUEUR_INF_LARGEUR "La longueur doit etre superieure à la largeur"
+#define SCALE_VALUE_INVALIDE "argument invalide, la valeur doit etre superieure a 0"
+#define SYSTEM_ERROR "Erreur système irrecuperable"
+
+/*****************************/
+/*** CONFIG ******************/
+/*****************************/
+
+#define WINDOW_POS_X 0
+#define WINDOW_POS_Y 0
+#define WINDOW_SIZE_X 600
+#define WINDOW_SIZE_Y 600
+#define MAX_FORM_METER 200
+#define MAX_FORM_BORD_SIZE 5
+#define MAX_FORM_STORAGE 5

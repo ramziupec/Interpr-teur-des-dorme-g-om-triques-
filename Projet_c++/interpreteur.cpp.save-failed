@@ -1,0 +1,260 @@
+#include "interpreteur.h"
+#include "rectangle.cpp"
+#include "environnement.cpp"
+#include "forme.cpp"
+//#include "rectangle.cpp"
+
+constexpr unsigned int hashed(const char* str, int h = 0)
+{
+
+    return !str[h] ? 5381 : (hashed(str, h+1) * 33) ^ str[h];
+}
+
+Interpreteur::Interpreteur(sf::renderwindow *window)
+{
+    this->command = "";
+    this->selected_form_id = AUCUNE_FORME_SELECTIONNE;
+    this->window = window;
+}
+
+Interpreteur::~Interpreteur()
+{
+
+}
+
+void Interpreteur::start()
+{
+    cout << start_msg << endl;
+}
+
+void Interpreteur::exit()
+{
+
+}
+
+void interpreteur::reset()
+{
+    command = "";
+    isstream.str("");
+}
+
+bool interpreteur::lire()
+{
+    setcolor(10);
+    cout << "> ";
+    getline(cin, command);
+    isstream.str(command);
+    if (command == exit_cmd)
+    {
+        throw exit_cmd;
+    }
+    setcolor(15);
+}
+
+void interpreteur::executer()
+{
+
+    color col_f;
+    color col_b;
+    char* id;
+    char* forme_type;
+    int epai;
+    int x;
+    int y;
+    int p1;
+    int p2;
+
+    const char* keyword = interpreter();
+    //cout << keyword << endl;
+
+    // case
+    switch ( hashed(keyword) )
+    {
+
+    // create
+    case hashed(create) :
+
+        //cout << "creation" << endl;
+
+        parse_common();
+
+        // choisir le type de la forme
+        //keyword = interpreter();
+
+        switch( hashed(forme_type) )
+        {
+
+        // rectangle
+        case hashed(rectangle) :
+        {
+            //cout << "rectangle" << endl;
+
+            /**
+            // lire le id
+            keyword = interpreter();
+            cout << keyword << endl;
+            id = keyword;
+
+            // color fond
+            keyword = interpreter();
+            cout << keyword << endl;
+            col_f = getcolorbyname(keyword);
+
+            // color bordure
+            keyword = interpreter();
+            cout << keyword << endl;
+            col_b = getcolorbyname(keyword);
+
+            // tailles
+            epai = interpreterint();
+            cout << epai << endl;
+            x = interpreterint();
+            cout << x << endl;
+            y = interpreterint();
+            cout << y << endl;
+            **/
+
+            // lire les parametres extra;
+            p1 = interpreterint();
+            cout << p1 << endl;
+            p2 = interpreterint();
+            cout << p2 << endl;
+
+            //construire le ractangle
+            sf::vector2f vect((float) p1, (float) p2);
+            rectangle<int> forme(col_f,epai,col_b,vect,x,y);
+            forme.dessiner(window);
+
+            // ajouter à la persistence
+            //env.ajouterforme(id, forme);
+
+            break;
+
+        }
+
+        // case cercle
+
+        case hashed(cercle):
+        {
+
+        }
+
+        // polygone
+
+        case hashed(polygone) :
+        {
+
+        }
+
+
+        default :
+            throw forme_inconnue;
+            break;
+
+        }
+        break;
+
+    // select
+    case hashed(select) :
+
+        break;
+
+    // scale
+    case hashed(test) :
+    {
+        sf::vector2f vect(50, 50);
+        rectangle<int> forme(sf::color::red,2,sf::color::green,vect,10,10);
+        cout << "avant" << endl;
+        //forme = forme * 5;
+        //dimension<int> d(10,10);
+        sf::vector2f vecti(100, 100);
+        //forme = forme + vecti;
+        cout << "apr" << endl;;
+        forme.dessiner(window);
+
+    }
+    break;
+
+    // help
+    case hashed(help) :
+    {
+        cout << "liste des commandes valables" << endl;
+        cout << endl;
+        cout << create << endl;
+        cout << scale << endl;
+        cout << test << endl;
+        break;
+    }
+
+    // default
+    default :
+        throw commande_inconnue;
+
+    }
+
+}
+
+// interpreter une chaine de caractères
+const char* interpreteur::interpreter()
+{
+    string word = "";
+    getline(isstream, word, ' ');
+    if ( word == "")
+    {
+        throw parametre_manquant;
+    }
+    return word.c_str();
+}
+
+// interpreter un chaine comme un entier
+int interpreteur::interpreterint()
+{
+    int taille;
+    try
+    {
+        taille = atoi( interpreter() );
+
+        // tous les entiers doivent etre positifs
+        if (taille < 0)
+        {
+            throw taille_invalide;
+        }
+    }
+    catch (std::exception const & e)
+    {
+        throw taille_invalide;
+    }
+    return taille;
+}
+
+interpreteur::parse_common()
+{
+
+    // lire le type de la forme
+
+    const char* keyword = interpreter();
+
+    if (keyword != rectangle && keyword != cercle && keyword != polygone)
+    {
+        throw forme_inconnue;
+    }
+
+    forme_type = keyword;
+
+    // lire le id de la forme
+
+    keyword = interpreter();
+    form_id = keyword;
+
+    // lire les couleurs
+
+    color_f = getcolorbyname(interpreter());
+    color_b = getcolorbyname(interpreter());
+
+    // lire l'epaisseur et les positions
+
+    epai = interpreterint();
+    x = interpreterint();
+    y = interpreterint();
+
+}
